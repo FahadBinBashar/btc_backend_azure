@@ -142,7 +142,8 @@ class MetaMapController extends BaseApiController
         }
 
         $fields = $this->extractFields($payload);
-        $status = $this->mapMetaMapStatus($actualStatus);
+        $incomingStatus = $this->mapMetaMapStatus($actualStatus);
+        $status = $this->resolveStableStatus($verification->status, $incomingStatus, $eventName);
         $media = $this->extractMediaUrls($payload);
 
         $verification->fill(array_filter([
@@ -402,6 +403,35 @@ class MetaMapController extends BaseApiController
         }
 
         return match (strtolower($status)) {
+            'verified' => 'verified',
+            'rejected', 'reviewneeded', 'review_needed', 'review' => 'rejected',
+            'expired' => 'expired',
+            default => 'pending',
+        };
+    }
+
+    private function resolveStableStatus(?string $currentStatus, string $incomingStatus, string $eventName): string
+    {
+        $current = $this->normalizeVerificationStatus($currentStatus);
+        $incoming = $this->normalizeVerificationStatus($incomingStatus);
+        $event = strtolower(trim($eventName));
+
+        if ($incoming === 'pending') {
+            if (in_array($current, ['verified', 'rejected', 'expired'], true)) {
+                return $current;
+            }
+
+            if ($event === 'step_completed') {
+                return $current;
+            }
+        }
+
+        return $incoming;
+    }
+
+    private function normalizeVerificationStatus(?string $status): string
+    {
+        return match (strtolower(trim((string) $status))) {
             'verified' => 'verified',
             'rejected', 'reviewneeded', 'review_needed', 'review' => 'rejected',
             'expired' => 'expired',
