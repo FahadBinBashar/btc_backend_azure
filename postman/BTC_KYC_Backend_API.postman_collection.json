@@ -1,0 +1,561 @@
+﻿{
+  "info": {
+    "_postman_id": "0f2d6f61-0ee1-4e2f-bf6f-f287a682f8f9",
+    "name": "BTC KYC Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Core",
+      "item": [
+        {
+          "name": "Subscriber Lookup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"msisdn\": \"71234567\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriber-lookup",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriber-lookup"]
+            }
+          }
+        },
+        {
+          "name": "Subscriber Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phoneNumbers\": [\n        \"70050020\",\n        \"70050021\",\n        \"70050022\",\n        \"70050023\",\n        \"70050024\",\n        \"70050025\",\n        \"70050026\",\n        \"70050027\",\n        \"70050028\",\n        \"70050029\",\n        \"70050030\",\n        \"70050031\",\n        \"70050032\",\n        \"70050033\",\n        \"70050034\",\n        \"70050035\",\n        \"70050036\",\n        \"70050037\",\n        \"70050038\",\n        \"70050039\",\n        \"70050040\",\n        \"70050041\",\n        \"70050042\",\n        \"70050043\"\n    ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/subscriber-upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "subscriber-upload"]
+            }
+          }
+        },
+        {
+          "name": "OTP Send",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"msisdn\": \"71234567\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/send",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "send"]
+            }
+          }
+        },
+        {
+          "name": "OTP Verify",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"msisdn\": \"71234567\",\n  \"otp\": \"123456\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/verify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "verify"]
+            }
+          }
+        },
+        {
+          "name": "Payments Record",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"msisdn\": \"71234567\",\n  \"amount\": 20.0,\n  \"currency\": \"BWP\",\n  \"status\": \"completed\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/payments/record",
+              "host": ["{{base_url}}"],
+              "path": ["api", "payments", "record"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "eSIM",
+      "item": [
+        { "name": "Start", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/start", "host": ["{{base_url}}"], "path": ["api", "esim", "start"] } } },
+        { "name": "Accept Terms", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"accepted\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/terms", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "terms"] } } },
+        { "name": "Payment", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 20\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/payment", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "payment"] } } },
+        { "name": "Numbers", "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/numbers", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "numbers"] } } },
+        { "name": "Select Number", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"msisdn\": \"71234567\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/number", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "number"] } } },
+        { "name": "Registration", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"User\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/registration", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "registration"] } } },
+        { "name": "Start KYC", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"document_type\": \"omang\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/kyc/start", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "kyc", "start"] } } },
+        { "name": "KYC Status", "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/kyc/status", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "kyc", "status"] } } },
+        { "name": "Confirm KYC", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"verified\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/confirm-kyc", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "confirm-kyc"] } } },
+        { "name": "Activate", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/esim/{{esim_request_id}}/activate", "host": ["{{base_url}}"], "path": ["api", "esim", "{{esim_request_id}}", "activate"] } } }
+      ]
+    },
+    {
+      "name": "SIM Swap",
+      "item": [
+        { "name": "Start", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/start", "host": ["{{base_url}}"], "path": ["api", "simswap", "start"] } } },
+        { "name": "Number", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"msisdn\": \"71234567\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/number", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "number"] } } },
+        { "name": "Send OTP", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"channel\": \"sms\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/otp/send", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "otp", "send"] } } },
+        { "name": "Verify OTP", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"otp\": \"123456\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/otp/verify", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "otp", "verify"] } } },
+        { "name": "Payment", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 20\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/payment", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "payment"] } } },
+        { "name": "Start KYC", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"document_type\": \"omang\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/kyc/start", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "kyc", "start"] } } },
+        { "name": "KYC Status", "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/kyc/status", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "kyc", "status"] } } },
+        { "name": "SIM Type", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"sim_type\": \"esim\"\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/sim-type", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "sim-type"] } } },
+        { "name": "Finalize eSIM", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/esim/finalize", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "esim", "finalize"] } } },
+        { "name": "Select Shop", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"shop_id\": 1\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{base_url}}/api/simswap/{{simswap_request_id}}/shop/select", "host": ["{{base_url}}"], "path": ["api", "simswap", "{{simswap_request_id}}", "shop", "select"] } } }
+      ]
+    },
+    {
+      "name": "KYC Compliance",
+      "item": [
+        {
+          "name": "Start",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.request_id) pm.collectionVariables.set('kyc_request_id', String(json.request_id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/start",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "start"]
+            }
+          }
+        },
+        {
+          "name": "Accept Terms",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accepted\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/terms",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "terms"]
+            }
+          }
+        },
+        {
+          "name": "Submit Number",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"msisdn\": \"71234567\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/number",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "number"]
+            }
+          }
+        },
+        {
+          "name": "Registration",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plot_number\": \"123\",\n  \"ward\": \"Central\",\n  \"village\": \"Gaborone\",\n  \"city\": \"Gaborone\",\n  \"postal_address\": \"PO Box 100\",\n  \"next_of_kin_name\": \"Jane Doe\",\n  \"next_of_kin_relation\": \"Sister\",\n  \"next_of_kin_phone\": \"71230000\",\n  \"email\": \"user@example.com\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/registration",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "registration"]
+            }
+          }
+        },
+        {
+          "name": "Start KYC",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.kyc_verification_id) pm.collectionVariables.set('kyc_verification_id', String(json.kyc_verification_id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_type\": \"omang\",\n  \"session_id\": \"sess_001\",\n  \"verification_id\": \"ver_001\",\n  \"identity_id\": \"id_001\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/kyc/start",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "kyc", "start"]
+            }
+          }
+        },
+        {
+          "name": "Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "status"]
+            }
+          }
+        },
+        {
+          "name": "Complete",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"verified\": true,\n  \"kyc_verification_id\": {{kyc_verification_id}}\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/kyc-compliance/{{kyc_request_id}}/complete",
+              "host": ["{{base_url}}"],
+              "path": ["api", "kyc-compliance", "{{kyc_request_id}}", "complete"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MetaMap",
+      "item": [
+        {
+          "name": "Config",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_type\": \"{{metamap_document_type}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/metamap/config",
+              "host": ["{{base_url}}"],
+              "path": ["api", "metamap", "config"]
+            }
+          }
+        },
+        {
+          "name": "Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-signature", "value": "{{metamap_webhook_signature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventName\": \"verification_completed\",\n  \"flowId\": \"{{metamap_flow_id}}\",\n  \"identityId\": \"id_001\",\n  \"identityStatus\": \"verified\",\n  \"verificationId\": \"ver_001\",\n  \"metadata\": {\n    \"recordId\": \"{{kyc_verification_id}}\",\n    \"requestId\": \"{{kyc_request_id}}\",\n    \"documentType\": \"{{metamap_document_type}}\"\n  },\n  \"details\": {\n    \"extractedData\": {\n      \"firstName\": \"Test\",\n      \"lastName\": \"User\",\n      \"dateOfBirth\": \"1990-01-01\",\n      \"gender\": \"M\",\n      \"country\": \"Botswana\",\n      \"documentNumber\": \"123456789\",\n      \"expiryDate\": \"2030-12-31\"\n    }\n  },\n  \"status\": \"verified\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/metamap/webhook",
+              "host": ["{{base_url}}"],
+              "path": ["api", "metamap", "webhook"]
+            }
+          }
+        },
+        {
+          "name": "Webhook - verification_started",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-signature", "value": "{{metamap_webhook_signature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metadata\": {\n    \"timestamp\": \"2026-01-18T09:06:24.927Z\",\n    \"documentType\": \"{{metamap_document_type}}\",\n    \"recordId\": \"{{metamap_record_id}}\",\n    \"requestId\": \"{{kyc_request_id}}\"\n  },\n  \"resource\": \"https://api.prod.metamap.com/v2/verifications/696ca295b376a975f6eb460d\",\n  \"eventName\": \"verification_started\",\n  \"flowId\": \"{{metamap_flow_id}}\",\n  \"timestamp\": \"2026-01-18T09:06:30.166Z\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/metamap/webhook",
+              "host": ["{{base_url}}"],
+              "path": ["api", "metamap", "webhook"]
+            }
+          }
+        },
+        {
+          "name": "Webhook - step_completed",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-signature", "value": "{{metamap_webhook_signature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventName\": \"step_completed\",\n  \"flowId\": \"{{metamap_flow_id}}\",\n  \"verificationId\": \"ver_001\",\n  \"identityId\": \"id_001\",\n  \"step\": {\n    \"id\": \"document\",\n    \"status\": \"completed\",\n    \"data\": {\n      \"firstName\": \"Test\",\n      \"lastName\": \"User\"\n    }\n  },\n  \"metadata\": {\n    \"recordId\": \"{{metamap_record_id}}\",\n    \"requestId\": \"{{kyc_request_id}}\",\n    \"documentType\": \"{{metamap_document_type}}\"\n  },\n  \"timestamp\": \"2026-01-18T09:07:30.166Z\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/metamap/webhook",
+              "host": ["{{base_url}}"],
+              "path": ["api", "metamap", "webhook"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) pm.collectionVariables.set('admin_token', json.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "login"]
+            }
+          }
+        },
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/admin/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Users List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Admin\",\n  \"email\": \"newadmin@example.com\",\n  \"password\": \"secret123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Create Admin (Supabase Parity)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Role Admin\",\n  \"email\": \"roleadmin@example.com\",\n  \"password\": \"secret123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/create-admin",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "create-admin"]
+            }
+          }
+        },
+        {
+          "name": "Assign Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{admin_user_id}},\n  \"role\": \"{{admin_role}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/assign-role",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "assign-role"]
+            }
+          }
+        },
+        {
+          "name": "Remove Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{admin_user_id}},\n  \"role\": \"{{admin_role}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/remove-role",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "remove-role"]
+            }
+          }
+        },
+        {
+          "name": "Make Admin",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/{{admin_user_id}}/make-admin",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "{{admin_user_id}}", "make-admin"]
+            }
+          }
+        },
+        {
+          "name": "Remove Admin",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/{{admin_user_id}}/remove-admin",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "{{admin_user_id}}", "remove-admin"]
+            }
+          }
+        },
+        {
+          "name": "Payments List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/admin/payments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "payments"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000" },
+    { "key": "admin_email", "value": "shawn@guidepoint.co.bw" },
+    { "key": "admin_password", "value": "admin123" },
+    { "key": "admin_token", "value": "dev-admin-token" },
+    { "key": "esim_request_id", "value": "1" },
+    { "key": "simswap_request_id", "value": "1" },
+    { "key": "kyc_request_id", "value": "1" },
+    { "key": "kyc_verification_id", "value": "1" },
+    { "key": "metamap_document_type", "value": "omang" },
+    { "key": "metamap_flow_id", "value": "" },
+    { "key": "metamap_webhook_signature", "value": "" },
+    { "key": "metamap_record_id", "value": "1" },
+    { "key": "admin_user_id", "value": "1" },
+    { "key": "admin_role", "value": "admin" }
+  ]
+}
