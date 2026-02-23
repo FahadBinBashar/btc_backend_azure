@@ -6,6 +6,7 @@ use App\Models\KycVerification;
 use App\Models\RegistrationProfile;
 use App\Models\ServiceRequest;
 use App\Models\Subscriber;
+use App\Services\MatiService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -213,6 +214,9 @@ class KycComplianceController extends BaseApiController
         }
 
         $verification = $this->resolveBestVerification($serviceRequest->id);
+        if ($verification) {
+            $verification = $this->refreshFromMetaMapIfNeeded($verification, $serviceRequest);
+        }
 
         return $this->ok([
             'request_id' => (string) $serviceRequest->id,
@@ -366,5 +370,47 @@ class KycComplianceController extends BaseApiController
             ->where('service_request_id', $serviceRequestId)
             ->latest('id')
             ->first();
+    }
+
+    private function refreshFromMetaMapIfNeeded(KycVerification $verification, ServiceRequest $serviceRequest): KycVerification
+    {
+        if (strtolower((string) $verification->status) !== 'pending') {
+            return $verification;
+        }
+
+        if (empty($verification->verification_id)) {
+            return $verification;
+        }
+
+        $fullVerification = app(MatiService::class)->getVerification((string) $verification->verification_id);
+        if (!is_array($fullVerification)) {
+            return $verification;
+        }
+
+        $providerStatus = strtolower((string) ($fullVerification['identity']['status'] ?? ''));
+        $mappedStatus = match ($providerStatus) {
+            'verified' => 'verified',
+            'rejected', 'reviewneeded', 'review_needed', 'review' => 'rejected',
+            'expired' => 'expired',
+            default => 'pending',
+        };
+
+        if ($mappedStatus === 'pending') {
+            return $verification;
+        }
+
+        $verification->status = $mappedStatus;
+        $verification->identity_id = (string) ($fullVerification['identity']['id'] ?? $verification->identity_id);
+        $verification->raw_response = $fullVerification;
+        if ($mappedStatus === 'rejected') {
+            $verification->failure_reason = $verification->failure_reason ?? 'Verification rejected';
+        }
+        $verification->save();
+
+        $serviceRequest->status = $mappedStatus === 'verified' ? 'kyc_verified' : 'kyc_rejected';
+        $serviceRequest->current_step = $mappedStatus === 'verified' ? 'complete' : 'verification';
+        $serviceRequest->save();
+
+        return $verification->fresh() ?? $verification;
     }
 }
